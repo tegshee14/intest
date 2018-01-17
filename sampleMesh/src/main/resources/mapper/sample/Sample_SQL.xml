@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sample">
+	<select id="selectBoardList" parameterType="hashMap" resultType="hashMap">
+	<!--<include refid="common.pagingPre"/>  --> 
+	<![CDATA[
+		 select @RNUM := @RNUM + 1 AS RNUM, a.* 
+              from ( SELECT *
+                       FROM food ) a ,
+                   (SELECT @RNUM := 0) c
+	 ]]>
+	<!--  <include refid="common.pagingPost"/> --> 
+	</select>
+
+	<insert id="inserBoard" parameterType="hashMap">
+		insert into test (id,name)
+		values
+		(
+		#{TITLE}
+		,#{CONTENTS}
+		)
+
+	</insert>
+
+	<update id="updateBoard" parameterType="hashMap">
+		update test set name = #{CONTENTS}
+		where id = #{TITLE}
+	</update>
+	<delete id="deleteBoard" parameterType="hashMap">
+		delete test where id = #{TITLE}
+	</delete>
+</mapper>
